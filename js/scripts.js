@@ -43,3 +43,4 @@ function ActualizarTotalCarrito(totalCarrito,cantidadTotal){
     document.getElementById('idIvaCarrito').innerHTML="Iva: "+ivaCarrito.toFixed(2)+" $";
     document.getElementById('idSubTotalCarrito').innerHTML="Iva: "+subTotalCarrito.toFixed(2)+" $";
 }
+
