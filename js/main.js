@@ -74,8 +74,9 @@ while (nombreProducto!="ESC" && nombreProducto!="esc"){
     
     skuProducto = parseInt(prompt("Ingrese sku del Producto: "));
     let precioProducto = parseFloat(prompt("Ingrese precio de Producto: "));
+    let stockProducto = parseFloat(prompt("Stock a Publicar: "));
   
-    agregaProducto({nombre: nombreProducto,sku: skuProducto,precio: precioProducto});
+    agregaProducto({nombre: nombreProducto,sku: skuProducto,precio: precioProducto,stock: stockProducto});
 
     console.log(productos.lenght);
     console.log(productos);
