@@ -1,0 +1,7 @@
+# obligatorio
+/node_modules
+# opcional
+package-lock.json
+# scripts anterior
+/scripts.js
+
