@@ -65,6 +65,19 @@ function stockDisponible() {
     }
     return totalStock;
 }
+function OrdenarPrecio() {
+    const productosOrdenados = productos.map((producto) => producto);
+    return productosOrdenados.sort((a,b) => a.precio - b.precio);
+}
+function PrecioMenor(idmenorPrecio) {
+    const productosMenorPrecio = productos.filter(producto => producto.precio <= idmenorPrecio);
+    return productosMenorPrecio.sort((a,b) => a.precio - b.precio);
+}
+function buscarProducto(idnombre) {    
+    const productosBuscados = productos.find(producto => producto.nombre.includes(idnombre));
+    console.log(productosBuscados);
+    return productosBuscados;
+}
 
 while (nombreProducto!="ESC" && nombreProducto!="esc"){
     nombreProducto = prompt("Ingrese nombre del Producto                ESC-Termina ").toUpperCase();
@@ -96,3 +109,12 @@ while (skuProducto!="ESC" && skuProducto!="esc"){
 }
 
 alert("Stock Disponible: "+stockDisponible());
+
+console.log(OrdenarPrecio());
+
+let menorPrecio = prompt("Buscar articulos con  Precio menor a:");
+console.log(PrecioMenor(menorPrecio));
+
+let Nombrebuscar = prompt("Descripción de articulo a Buscar:").toUpperCase();
+console.log(Nombrebuscar);
+console.log(buscarProducto(Nombrebuscar.trim()));
