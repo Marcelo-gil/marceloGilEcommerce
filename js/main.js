@@ -17,8 +17,7 @@ const productos =[
 ];
 
 const carrito = {}
-const haches5 = document.querySelectorAll("h5");
-const ofertaArray = [oferta1, oferta2, oferta3, oferta4, oferta5, oferta6, oferta7, oferta8];
+const ofertaArray = [];
 
 function buscaOferta(idArt){
     const productosBuscados = productos.find(producto => producto.sku===idArt);
@@ -26,6 +25,11 @@ function buscaOferta(idArt){
 }
 
 function eliminaOferta(idOferta){
+    let ofertaAdd = ""
+    for (const producto of productos) {
+        ofertaAdd ="oferta"+(producto+1);
+        ofertaArray.push(0);
+    }
     const elemento = document.getElementById(ofertaArray[idOferta].textContent="");
 }
 
@@ -56,8 +60,8 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
     
     const imagenArticulo = document.createElement('img');
     imagenArticulo.className = "card-img-top";
-    imagenArticulo.src = imagenArt     /* &&"./imagenes/menthoplus.jpg" */
-    imagenArticulo.alt = "Imagen de Menthoplus";
+    imagenArticulo.src = imagenArt
+    imagenArticulo.alt = "Imagen de Articulo";
     divOferta0.appendChild(imagenArticulo);
     console.log(imagenArticulo);
     
@@ -125,19 +129,16 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
     articulocontador.textContent = 0;
     articuloAccion1.appendChild(articulocontador);
 
-    /* const articulocontador1 = document.createElement('p');
-    articulocontador1.textContent = 0
-    articulocontador.appendChild(articulocontador1); */
     /* boton - */
     const articuloAbtnResta = document.createElement('a');
     articuloAbtnResta.className = "btn  mt-auto";
     articuloAbtnResta.onclick = () =>  restarProducto(idArt);
     articuloAccion1.appendChild(articuloAbtnResta);
-
+    
     const articuloAbtnimgResta = document.createElement('img');
     articuloAbtnimgResta.src = "/imagenes/restar.png";
     articuloAbtnResta.appendChild(articuloAbtnimgResta);
-
+    /* inserto en el html */
     fragment.appendChild(divOferta);
     console.log(divOferta);
     
@@ -259,18 +260,6 @@ function buscarProductoSku(idSku) {
     return productosBuscados;
 }
 
-for (let i = 0; i < (haches5.length); i++) {
-    
-    if (buscaOferta(i+1)){
-        haches5[i].style.color = "red";
-        /* console.log(haches5[i+1]); */
-    } else{
-        /* ofertaArray[i].remove(); */
-        eliminaOferta(i);
-    }
-}
- 
-
 while (nombreProducto!="ESC" && nombreProducto!="esc"){
     nombreProducto = prompt("Ingrese nombre del Producto                ESC-Termina ").toUpperCase();
     if (nombreProducto=="ESC" || nombreProducto=="esc") {
@@ -289,9 +278,9 @@ while (nombreProducto!="ESC" && nombreProducto!="esc"){
   
     agregaProducto({nombre: nombreProducto,sku: skuProducto,precio: precioProducto,stock: stockProducto,oferta: ofertaProd,imagenArt: fotoProducto});
     
-    agregaProductohtml(skuProducto, nombreProducto, precioProducto, ofertaProd, fotoProducto);
+   /*  agregaProductohtml(skuProducto, nombreProducto, precioProducto, ofertaProd, fotoProducto);
     console.log(productos.lenght);
-    console.log(productos);
+    console.log(productos); */
     
 }
 
@@ -326,4 +315,13 @@ agregaProductohtml(idArtnew, "PAST. MENTHOPLUS S/AZUCAR X 12 DURAZNO", 506, true
 
 for (const producto of productos) {
     agregaProductohtml(producto.sku, producto.nombre, producto.precio, producto.oferta,producto.imagenArt);
+}
+const haches5 = document.querySelectorAll("h5");
+/*  */
+for (let i = 0; i < (haches5.length); i++) {
+    if (buscaOferta(i+1)){
+        haches5[i].style.color = "red";
+    } else{
+        eliminaOferta(i);
+    }
 }
