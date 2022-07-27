@@ -15,7 +15,7 @@
     </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
                 <!-- <a class="navbar-brand" href="#!">El mundo de las Golosinas</a> -->
                 <!-- <a class="navbar-brand" href="#"><img src="./imagenes/logo.ico" alt="Logo" class="mi-logo"></a> -->
@@ -27,10 +27,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">Todos los Productos</a></li>
+                                <li><a class="dropdown-item" href="" id="todosProductos">Todos los Productos</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Articulos en Promoción</a></li>
-                                <li><a class="dropdown-item" href="#!">Novedades</a></li>
+                                <li><a class="dropdown-item" id="promoProductos">Articulos en Promoción</a></li>
+                                <li><a class="dropdown-item" href="">Novedades</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -58,7 +58,23 @@
             </div>
         </header>
         <!-- Seccion-->
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-md-8 px-4 px-lg-5 pt-4">
+                    <div class="input-group">
+                        <input id="fname" name="name" type="text" placeholder="Buscar" class="form-control" >
+                        <span class="input-group-append">
+                            <button class="btn btn-outline-secondary border-left-0 border" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                          </span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <section class="py-5">
+
             <div class="container px-4 px-lg-5">
                 <div id="ProductosNuevos" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 </div>

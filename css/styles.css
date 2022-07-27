@@ -75,7 +75,9 @@
     scroll-behavior: smooth;
   }
 }
-
+#promoProductos {
+  cursor: pointer
+}
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

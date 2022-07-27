@@ -13,7 +13,8 @@ const productos =[
     {nombre: 'CHICLE BELDENT INFINIT X UNID.', sku: 7,precio: 200,stock: 80,oferta: true,imagenArt: "./imagenes/BeldemtInfinit.jpg"},
     {nombre: 'CHOC. BIZNIKKE NEVADO X 25 GRS', sku: 8,precio: 95,stock: 10,oferta: false,imagenArt: "./imagenes/biznikkeNevado.jpg"},
     {nombre: 'ALF. GUAYMALLEN TRIPLE X 24 UNID. FRUTA', sku: 9,precio: 580,stock: 28,oferta: true,imagenArt: "./imagenes/alf3guaymallen.jpg"}, 
-    {nombre: 'PAST. MENTHOPLUS S/AZUCAR X 12 DURAZNO', sku: 10,precio: 506,stock: 14,oferta: true,imagenArt: "./imagenes/menthoplus.jpg"} 
+    {nombre: 'PAST. MENTHOPLUS S/AZUCAR X 12 DURAZNO', sku: 10,precio: 506,stock: 14,oferta: true,imagenArt: "./imagenes/menthoplus.jpg"},
+    {nombre: 'TIC TAC MENTA FUERTE', sku: 11,precio: 120,stock: 4,oferta: false,imagenArt: "./imagenes/ticTacMentaFuerte.jpg"} 
 ];
 
 const carrito = {}
@@ -33,8 +34,12 @@ function eliminaOferta(idOferta){
     const elemento = document.getElementById(ofertaArray[idOferta].textContent="");
 }
 
+function limpiarProductoshtml(){
+    let nuevos = document.querySelector("#ProductosNuevos");
+    nuevos.innerHTML = "";
+}
+
 function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProducto,imagenArt){
-    
     let nuevos = document.querySelector("#ProductosNuevos");
 
     const fragment = document.createDocumentFragment();
@@ -112,6 +117,7 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
     articuloAccion.appendChild(articuloAccion1);
     /* boton + */
     const articuloAbtn = document.createElement('a');
+    articuloAbtn.id = "idsumaProducto"+idArt;
     articuloAbtn.className = "btn  mt-auto";
     articuloAbtn.onclick = () => sumarProducto(idArt); 
     articuloAccion1.appendChild(articuloAbtn);
@@ -123,14 +129,15 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
     articuloAbtnimg.src = "/imagenes/sumar.png";
     articuloAbtn.appendChild(articuloAbtnimg);
     /* contador */
-    const articulocontador = document.createElement('span');
-    articulocontador.id = "idContadorProducto"+idArt;
-    articulocontador.className="badge  bg-dark2 text-dark ms-1";
-    articulocontador.textContent = 0;
-    articuloAccion1.appendChild(articulocontador);
+    const articuloContador = document.createElement('span');
+    articuloContador.id = "idContadorProducto"+idArt;
+    articuloContador.className="badge  bg-dark2 text-dark ms-1";
+    articuloContador.textContent = 0;
+    articuloAccion1.appendChild(articuloContador);
 
     /* boton - */
     const articuloAbtnResta = document.createElement('a');
+    articuloAbtnResta.id = "idRestaProducto"+idArt;
     articuloAbtnResta.className = "btn  mt-auto";
     articuloAbtnResta.onclick = () =>  restarProducto(idArt);
     articuloAccion1.appendChild(articuloAbtnResta);
@@ -144,8 +151,7 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
     
     /* document.body.appendChild(fragment); */
     /* padre.appendChild(fragment); */
-    nuevos.appendChild(fragment);
-
+    nuevos.appendChild(fragment);    
 }
 function sumarProducto(idArt){
     console.log(carrito);
@@ -203,18 +209,8 @@ function ActualizarTotalCarrito(totalCarrito,cantidadTotal,contadorProducto){
         if (cantidadCodigos+1>contadorProducto.lenght){
             contadorProducto.push(0);
         }
-    
         document.getElementById(idcoprod).innerHTML=contadorProducto[i+1];
     }        
-    /* document.getElementById('idContadorProducto1').innerHTML=contadorProducto[1];
-    document.getElementById('idContadorProducto2').innerHTML=contadorProducto[2];
-    document.getElementById('idContadorProducto3').innerHTML=contadorProducto[3];
-    document.getElementById('idContadorProducto4').innerHTML=contadorProducto[4];
-    document.getElementById('idContadorProducto5').innerHTML=contadorProducto[5];
-    document.getElementById('idContadorProducto6').innerHTML=contadorProducto[6];
-    document.getElementById('idContadorProducto7').innerHTML=contadorProducto[7];
-    document.getElementById('idContadorProducto8').innerHTML=contadorProducto[8]; */
-    
     document.getElementById('idContadorCarrito').innerHTML=cantidadTotal;    
     document.getElementById('idTotalCarrito').innerHTML="Total: "+totalCarrito.toFixed(2)+" $";
     let subTotalCarrito=totalCarrito/(1+alicuota/100);
@@ -254,35 +250,66 @@ function buscarProducto(idnombre) {
     console.log(productosBuscados);
     return productosBuscados;
 }
+function buscarProductos(idnombre) {    
+    const productosBuscados = productos.filter(producto => producto.nombre.includes(idnombre));
+    console.log(productosBuscados);
+    return productosBuscados;
+}
 function buscarProductoSku(idSku) {    
     const productosBuscados = productos.find(producto => producto.sku===idSku);
     console.log(productosBuscados);
     return productosBuscados;
 }
-
-while (nombreProducto!="ESC" && nombreProducto!="esc"){
-    nombreProducto = prompt("Ingrese nombre del Producto                ESC-Termina ").toUpperCase();
-    if (nombreProducto=="ESC" || nombreProducto=="esc") {
-        break;
-    }
-    
-    skuProducto = productos.length+1; /* parseInt(prompt("Ingrese sku del Producto: ")); */
-    let precioProducto = parseFloat(prompt("Ingrese precio de Producto: "));
-    let stockProducto = parseFloat(prompt("Stock a Publicar: "));
-    let ofertaProducto = prompt("Oferta Si o No").toUpperCase();
-    let fotoProducto = prompt("Ingrese foto del Producto");
-    let ofertaProd = false;
-    if (ofertaProducto="SI"){
-        ofertaProd = true;
-    }
-  
-    agregaProducto({nombre: nombreProducto,sku: skuProducto,precio: precioProducto,stock: stockProducto,oferta: ofertaProd,imagenArt: fotoProducto});
-    
-   /*  agregaProductohtml(skuProducto, nombreProducto, precioProducto, ofertaProd, fotoProducto);
-    console.log(productos.lenght);
-    console.log(productos); */
-    
+function mensajeEvento(mensaje) { 
+    alert(mensaje); 
 }
+function buscarOfertas() { 
+    const productosBuscados = productos.filter(producto => producto.oferta);
+    console.log(productosBuscados);
+    return productosBuscados;
+}
+function updateValue(e) {
+    let letras=e.srcElement.value;
+    letras=letras.toUpperCase();
+    const resultado = buscarProductos(letras);
+    /* console.log(resultado); */
+    limpiarProductoshtml()
+    for (const producto of resultado) {
+        agregaProductohtml(producto.sku, producto.nombre, producto.precio, producto.oferta,producto.imagenArt);
+    }
+}
+function updateOfertas() {
+    const resultado = buscarOfertas();
+     console.log(resultado); 
+    limpiarProductoshtml()
+    for (const producto of resultado) {
+        agregaProductohtml(producto.sku, producto.nombre, producto.precio, producto.oferta,producto.imagenArt);
+    }
+}
+
+// while (nombreProducto!="ESC" && nombreProducto!="esc"){
+//     nombreProducto = prompt("Ingrese nombre del Producto                ESC-Termina ").toUpperCase();
+//     if (nombreProducto=="ESC" || nombreProducto=="esc") {
+//         break;
+//     }
+    
+//     skuProducto = productos.length+1; /* parseInt(prompt("Ingrese sku del Producto: ")); */
+//     let precioProducto = parseFloat(prompt("Ingrese precio de Producto: "));
+//     let stockProducto = parseFloat(prompt("Stock a Publicar: "));
+//     let ofertaProducto = prompt("Oferta Si o No").toUpperCase();
+//     let fotoProducto = prompt("Ingrese foto del Producto");
+//     let ofertaProd = false;
+//     if (ofertaProducto="SI"){
+//         ofertaProd = true;
+//     }
+
+//     agregaProducto({nombre: nombreProducto,sku: skuProducto,precio: precioProducto,stock: stockProducto,oferta: ofertaProd,imagenArt: fotoProducto});
+    
+//    /*  agregaProductohtml(skuProducto, nombreProducto, precioProducto, ofertaProd, fotoProducto);
+//     console.log(productos.lenght);
+//     console.log(productos); */
+    
+// }
 
 /* while (skuProducto!="ESC" && skuProducto!="esc"){
     skuProducto = (prompt("Ingrese sku del Producto a Borrar                 ESC-Termina "));
@@ -325,3 +352,22 @@ for (let i = 0; i < (haches5.length); i++) {
         eliminaOferta(i);
     }
 }
+productos.forEach((producto) => {
+    /* const idButton = `add-cart${producto.sku}`  */
+    const idButtonResta ="idRestaProducto"+producto.sku;
+    const botonResta=document.getElementById(idButtonResta);
+    botonResta.addEventListener('click', () => mensajeEvento("Quitaste "+producto.nombre));
+    
+    const idButtonSuma ="idsumaProducto"+producto.sku;
+    const botonSuma=document.getElementById(idButtonSuma);
+    botonSuma.addEventListener('click', () => mensajeEvento("Agregaste "+producto.nombre));
+});
+const imputId = document.getElementById("fname");
+imputId.addEventListener('input',updateValue);
+
+const todoProd=document.getElementById("todosProductos");
+imputId.addEventListener('click',updateValue);
+
+const promoProd=document.getElementById("promoProductos");
+promoProd.addEventListener('click',updateOfertas);
+
