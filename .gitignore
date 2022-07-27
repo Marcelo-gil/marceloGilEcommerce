@@ -3,5 +3,6 @@
 # opcional
 package-lock.json
 # scripts anterior
-/scripts.js
-
+/js/scripts.js
+/indexoriginal.js
+/js/maindom.js
