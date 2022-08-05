@@ -117,7 +117,7 @@ function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioPr
     articuloAccion1.appendChild(articuloAbtn);
         
     const articuloAbtnimg = document.createElement('img');
-    articuloAbtnimg.src = "/imagenes/sumar.png";
+    articuloAbtnimg.src = "./imagenes/sumar.png";
     articuloAbtn.appendChild(articuloAbtnimg);
     
     /* contador */
@@ -135,7 +135,7 @@ function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioPr
     articuloAccion1.appendChild(articuloAbtnResta);
     
     const articuloAbtnimgResta = document.createElement('img');
-    articuloAbtnimgResta.src = "/imagenes/restar.png";
+    articuloAbtnimgResta.src = "./imagenes/restar.png";
     articuloAbtnResta.appendChild(articuloAbtnimgResta);
     /* inserto en el html */
     fragment.appendChild(divOferta);
@@ -144,15 +144,13 @@ function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioPr
 function sumarProducto(idArt){
     const miProducto=buscarProductoSku(idArt);
     if (idArt in carrito){
-/*         carrito[idArt].cantidad = carrito[idArt].cantidad + 1;
-        carrito[idArt].total = miProducto.precio*carrito[idArt].cantidad;*/
         carrito[idArt] = {
             ...carrito[idArt], 
             cantidad: carrito[idArt].cantidad + 1,
             total:  miProducto.precio*carrito[idArt].cantidad
         };
     }else {
-        carrito[idArt] = {sku: miProducto.sku,nombre: miProducto.nombre, cantidad: 1,total:miProducto.precio};
+        carrito[idArt] = {sku: miProducto.sku,nombre: miProducto.nombre, cantidad: 1,total: miProducto.precio,imagenArt: miProducto.imagenArt};
     }
     localStorage.setItem("carrito", JSON.stringify(carrito));
     let [totalCarrito, cantidadTotal] = calculaTotal();
