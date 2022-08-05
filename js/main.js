@@ -27,21 +27,12 @@ function buscaOferta(idArt){
     return productosBuscados.oferta;
 }
 
-function eliminaOferta(idOferta){
-    let ofertaAdd = ""
-    for (const producto of productos) {
-        ofertaAdd ="oferta"+(producto+1);
-        ofertaArray.push(0);
-    }
-    const elemento = document.getElementById(ofertaArray[idOferta].textContent="");
-}
-
 function limpiarProductoshtml(){
     let nuevos = document.querySelector("#ProductosNuevos");
     nuevos.innerHTML = "";
 }
 
-function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProducto,imagenArt){
+function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioProducto, oferta: ofertaProducto, imagenArt}){
     let nuevos = document.querySelector("#ProductosNuevos");
 
     const fragment = document.createDocumentFragment();
@@ -58,11 +49,12 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
     divOferta1.id="oferta"+idArt;
     divOferta1.className = "badge bg-dark text-dark position-absolute" ;
     divOferta1.style="top: 0.5rem; right: 0.5rem"
-    if (ofertaProducto){
+    /* if (ofertaProducto){
         divOferta1.textContent ="Oferta";
     } else {
         divOferta1.textContent ="";
-    }
+    } */
+    divOferta1.textContent = (ofertaProducto) ? "Oferta" : "";
     divOferta0.appendChild(divOferta1);
     
     const imagenArticulo = document.createElement('img');
@@ -82,6 +74,7 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
     const articuloNombre2 = document.createElement('h5');
     articuloNombre2.className = "fw-bolder";
     articuloNombre2.textContent = nombreProducto;
+    articuloNombre2.style.color = (ofertaProducto) ? "red" : "black";
     articuloNombre.appendChild(articuloNombre2);
 
     const divEstrellas = document.createElement('div');
@@ -124,7 +117,7 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
     articuloAccion1.appendChild(articuloAbtn);
         
     const articuloAbtnimg = document.createElement('img');
-        articuloAbtnimg.src = "/imagenes/sumar.png";
+    articuloAbtnimg.src = "/imagenes/sumar.png";
     articuloAbtn.appendChild(articuloAbtnimg);
     
     /* contador */
@@ -151,8 +144,13 @@ function agregaProductohtml(idArt, nombreProducto, precioProducto, ofertaProduct
 function sumarProducto(idArt){
     const miProducto=buscarProductoSku(idArt);
     if (idArt in carrito){
-        carrito[idArt].cantidad = carrito[idArt].cantidad + 1;
-        carrito[idArt].total = miProducto.precio*carrito[idArt].cantidad;
+/*         carrito[idArt].cantidad = carrito[idArt].cantidad + 1;
+        carrito[idArt].total = miProducto.precio*carrito[idArt].cantidad;*/
+        carrito[idArt] = {
+            ...carrito[idArt], 
+            cantidad: carrito[idArt].cantidad + 1,
+            total:  miProducto.precio*carrito[idArt].cantidad
+        };
     }else {
         carrito[idArt] = {sku: miProducto.sku,nombre: miProducto.nombre, cantidad: 1,total:miProducto.precio};
     }
@@ -169,9 +167,7 @@ function restarProducto(idArt){
         }
         let [totalCarrito, cantidadTotal] = calculaTotal();
         actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
-        if (carrito[idArt].cantidad === 0){
-            delete carrito[idArt];
-        }
+        (carrito[idArt].cantidad === 0) && delete carrito[idArt];
         localStorage.setItem("carrito", JSON.stringify(carrito));
     }
 }
@@ -203,9 +199,7 @@ function agregaProducto(producto) {
 
 function EliminaProducto(idProducto) {
     const indexBusqueda = productos.findIndex(producto => producto.sku === idProducto);    
-    if(indexBusqueda!= -1) {
-        productos.splice(indexBusqueda, 1);
-    }
+    (indexBusqueda!= -1) && productos.splice(indexBusqueda, 1);
 }
 function stockDisponible() {
     let totalStock = 0;
@@ -215,7 +209,8 @@ function stockDisponible() {
     return totalStock;
 }
 function OrdenarPrecio() {
-    const productosOrdenados = productos.map((producto) => producto);
+    //const productosOrdenados = productos.map((producto) => producto);
+    const productosOrdenados = [...productos]
     return productosOrdenados.sort((a,b) => a.precio - b.precio);
 }
 function PrecioMenor(idmenorPrecio) {
@@ -245,8 +240,9 @@ function updateValue(e) {
     const resultado = buscarProductos(letras);
     limpiarProductoshtml()
     for (const producto of resultado) {
-        agregaProductohtml(producto.sku, producto.nombre, producto.precio, producto.oferta,producto.imagenArt);
+        agregaProductohtml(producto);
     }
+    /* desestructuro return  */
     let [totalCarrito, cantidadTotal] = calculaTotal();
     actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
 }
@@ -254,7 +250,7 @@ function updateOfertas() {
     const resultado = buscarOfertas();
     limpiarProductoshtml()
     for (const producto of resultado) {
-        agregaProductohtml(producto.sku, producto.nombre, producto.precio, producto.oferta,producto.imagenArt);
+        agregaProductohtml(producto);
     }
     let [totalCarrito, cantidadTotal] = calculaTotal();
     actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
@@ -278,24 +274,9 @@ function vaciarCarrito(){
 
 /*  Armo el html con los productos */
 for (const producto of productos) {
-    agregaProductohtml(producto.sku, producto.nombre, producto.precio, producto.oferta,producto.imagenArt);
+    agregaProductohtml(producto);
 }
-const haches5 = document.querySelectorAll("h5");
-/*  */
-for (let i = 0; i < (haches5.length); i++) {
-    if (buscaOferta(i+1)){
-        haches5[i].style.color = "red";
-    } else{
-        eliminaOferta(i);
-    }
-}
-productos.forEach((producto) => {
-    const idButtonResta ="idRestaProducto"+producto.sku;
-    const botonResta=document.getElementById(idButtonResta);
-    
-    const idButtonSuma ="idsumaProducto"+producto.sku;
-    const botonSuma=document.getElementById(idButtonSuma);
-});
+
 const imputId = document.getElementById("fname");
 imputId.addEventListener('input',updateValue);
 
