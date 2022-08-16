@@ -49,11 +49,6 @@ function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioPr
     divOferta1.id="oferta"+idArt;
     divOferta1.className = "badge bg-dark text-dark position-absolute" ;
     divOferta1.style="top: 0.5rem; right: 0.5rem"
-    /* if (ofertaProducto){
-        divOferta1.textContent ="Oferta";
-    } else {
-        divOferta1.textContent ="";
-    } */
     divOferta1.textContent = (ofertaProducto) ? "Oferta" : "";
     divOferta0.appendChild(divOferta1);
     
@@ -192,11 +187,9 @@ function actualizarTotalCarritoHtml(totalCarrito,cantidadTotal){
     document.getElementById('idIvaCarrito').innerHTML="Iva: "+ivaCarrito.toFixed(2)+" $";
     document.getElementById('idSubTotalCarrito').innerHTML="Subtotal: "+subTotalCarrito.toFixed(2)+" $";
 }
-
 function agregaProducto(producto) {
     productos.push(producto);
 }
-
 function EliminaProducto(idProducto) {
     const indexBusqueda = productos.findIndex(producto => producto.sku === idProducto);    
     (indexBusqueda!= -1) && productos.splice(indexBusqueda, 1);
@@ -229,7 +222,6 @@ function buscarProductoSku(idSku) {
     const productosBuscados = productos.find(producto => producto.sku===idSku);
     return productosBuscados;
 }
-
 function buscarOfertas() { 
     const productosBuscados = productos.filter(producto => producto.oferta);
     return productosBuscados;
@@ -269,8 +261,6 @@ function vaciarCarrito(){
         localStorage.setItem("carrito", JSON.stringify(carrito));
     /* } */
 }
-
-
 function toasti(mensaje,color1,color2){
     Toastify({
         text: mensaje,
@@ -283,12 +273,11 @@ function toasti(mensaje,color1,color2){
         duration: 3000
     }).showToast();
 }    
- 
 function displaycarrito() {
     /* carrito.forEach((carrito) => */
     document.getElementById("finCarrito").innerHTML = ``
     for (const sku in carrito) {
-        let tablaImg = `<td><img src="${carrito[sku].imagenArt}" class="imagenPequenia" style="width:45px"></td>`;
+        let tablaImg = `<td><img src="${carrito[sku].imagenArt}" class=".imagenPequenia" style="width:45px"></td>`;
         let tablaNombre = `<td>${carrito[sku].nombre}</td>`;
         let tablaCantidad = `<td  class="text-center"> ${carrito[sku].cantidad}</td>`;
         let tablaPrecio = `<td class="text-end">$ ${carrito[sku].total}</td>`;
@@ -301,34 +290,23 @@ function displaycarrito() {
     let tablaPrecio = `<td class="text-end"><b>Total $ ${totalCarrito}</b></td>`;
     document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
 }
-
-
 /* =========== Fin funciones ========== */
 
 /*  Armo el html con los productos */
 for (const producto of productos) {
     agregaProductohtml(producto);
 }
-
 const imputId = document.getElementById("fname");
 imputId.addEventListener('input',updateValue);
-
 const todoProd=document.getElementById("todosProductos");
 imputId.addEventListener('click',updateValue);
-
 const promoProd=document.getElementById("promoProductos");
 promoProd.addEventListener('click',updateOfertas);
-
-//const vaciarCarro=document.getElementById("btnVaciarCarrito");
-//vaciarCarro.addEventListener('click',vaciarCarrito);
-
 /* Calculo Totales por si recupere el carrito del storage  */
 let [totalCarrito, cantidadTotal] = calculaTotal();
 actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
-
 const btnCarrito=document.querySelector('#btnCarrito');
 btnCarrito.addEventListener('click', () => {displaycarrito()});
-
 const btn1=document.querySelector('#btnVaciarCarrito');
 btn1.addEventListener('click', (e) => {    
     e.preventDefault();
