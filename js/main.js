@@ -278,11 +278,30 @@ function toasti(mensaje,color1,color2){
         position: "right", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
-          background: `linear-gradient(to right, ${color1}, ${color2})`,
+        background: `linear-gradient(to right, ${color1}, ${color2})`,
         },
         duration: 3000
     }).showToast();
 }    
+ 
+function displaycarrito() {
+    /* carrito.forEach((carrito) => */
+    document.getElementById("finCarrito").innerHTML = ``
+    for (const sku in carrito) {
+        let tablaImg = `<td><img src="${carrito[sku].imagenArt}" style="width:45px"></td>`;
+        let tablaNombre = `<td>${carrito[sku].nombre}</td>`;
+        let tablaCantidad = `<td  class="text-center"> ${carrito[sku].cantidad}</td>`;
+        let tablaPrecio = `<td class="text-end">$ ${carrito[sku].total}</td>`;
+        document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
+    }
+    let [totalCarrito, cantidadTotal] = calculaTotal()
+    let tablaImg = `<td></td>`;
+    let tablaNombre = `<td></td>`;
+    let tablaCantidad = `<td class="text-center"></td>`;
+    let tablaPrecio = `<td class="text-end"><b>Total $ ${totalCarrito}</b></td>`;
+    document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
+}
+
 
 /* =========== Fin funciones ========== */
 
@@ -307,6 +326,9 @@ promoProd.addEventListener('click',updateOfertas);
 let [totalCarrito, cantidadTotal] = calculaTotal();
 actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
 
+const btnCarrito=document.querySelector('#btnCarrito');
+btnCarrito.addEventListener('click', () => {displaycarrito()});
+
 const btn1=document.querySelector('#btnVaciarCarrito');
 btn1.addEventListener('click', (e) => {    
     e.preventDefault();
@@ -318,7 +340,7 @@ btn1.addEventListener('click', (e) => {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, Borrar!'
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             vaciarCarrito();
             Swal.fire({
@@ -327,5 +349,7 @@ btn1.addEventListener('click', (e) => {
                 text: 'Carrito Borrado!'
             })
         }
-      })
+    })
 });
+
+
