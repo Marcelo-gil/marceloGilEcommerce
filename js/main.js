@@ -58,7 +58,7 @@ function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioPr
     divOferta0.appendChild(divOferta1);
     
     const imagenArticulo = document.createElement('img');
-    imagenArticulo.className = "card-img-top";
+    imagenArticulo.className = "card-img-top imagenPequenia";
     imagenArticulo.src = imagenArt
     imagenArticulo.alt = "Imagen de Articulo";
     divOferta0.appendChild(imagenArticulo);
@@ -288,7 +288,7 @@ function displaycarrito() {
     /* carrito.forEach((carrito) => */
     document.getElementById("finCarrito").innerHTML = ``
     for (const sku in carrito) {
-        let tablaImg = `<td><img src="${carrito[sku].imagenArt}" style="width:45px"></td>`;
+        let tablaImg = `<td><img src="${carrito[sku].imagenArt}" class="imagenPequenia" style="width:45px"></td>`;
         let tablaNombre = `<td>${carrito[sku].nombre}</td>`;
         let tablaCantidad = `<td  class="text-center"> ${carrito[sku].cantidad}</td>`;
         let tablaPrecio = `<td class="text-end">$ ${carrito[sku].total}</td>`;
