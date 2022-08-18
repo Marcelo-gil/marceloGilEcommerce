@@ -10,7 +10,20 @@ const traerProductosEnJson = async () => {
     productos = informacion;
 }
 
-/* Obtengo carrito del storage o creo uno vacio */
+const TraerProductoMercadoLibre = async () => {
+    const response = await fetch('https://api.mercadolibre.com/sites/MLA/search?q=chocolate');
+    const informacion = await response.json();
+    let productosMl = [];
+    let xid=0
+    informacion.results.forEach((item) => {
+        productosMl[xid] = { nombre: item.title.toUpperCase() , sku: item.id , precio: item.price, stock: 0, oferta: false, imagenArt: item.thumbnail };
+        xid += 1
+    });
+    productos = productosMl;
+}
+
+/* Obtengo carrito del storage o creo uno vacio*/
+
 const carrito = JSON.parse(localStorage.getItem("carrito")) ?? {};
 
 const ofertaArray = [];
@@ -47,6 +60,7 @@ function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioPr
     
     const imagenArticulo = document.createElement('img');
     imagenArticulo.className = "card-img-top imagenPequenia";
+    imagenArticulo.style="width:167px";
     imagenArticulo.src = imagenArt
     imagenArticulo.alt = "Imagen de Articulo";
     divOferta0.appendChild(imagenArticulo);
@@ -140,6 +154,7 @@ function sumarProducto(idArt){
     }else {
         carrito[idArt] = {sku: miProducto.sku,nombre: miProducto.nombre, cantidad: 1,total: miProducto.precio,imagenArt: miProducto.imagenArt};
     }
+    console.log(carrito);
     localStorage.setItem("carrito", JSON.stringify(carrito));
     let [totalCarrito, cantidadTotal] = calculaTotal();
     actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
@@ -283,9 +298,7 @@ function displaycarrito() {
     let tablaPrecio = `<td class="text-end"><b>Total $ ${totalCarrito}</b></td>`;
     document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
 }
-/* =========== Fin funciones ========== */
-/* ejecuto la Funcion y cuando tengo la respuesta armo el carrito */
-traerProductosEnJson().then( () => { 
+function armoElCarrito() {
     /*  Armo el html con los productos */
     for (const producto of productos) {
         agregaProductohtml(producto);
@@ -323,5 +336,13 @@ traerProductosEnJson().then( () => {
             }
         })
     });
-})
+}
+/* =========== Fin funciones ========== */
+/* ejecuto la Funcion y cuando tengo la respuesta armo el carrito */
+/* traerProductosEnJson().then( () => { 
+    armoElCarrito()
+}) */
 
+TraerProductoMercadoLibre().then( () => { 
+    armoElCarrito()
+})
