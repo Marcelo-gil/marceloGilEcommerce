@@ -10,8 +10,8 @@ const traerProductosEnJson = async () => {
     productos = informacion;
 }
 
-const TraerProductoMercadoLibre = async () => {
-    const response = await fetch('https://api.mercadolibre.com/sites/MLA/search?q=chocolate');
+const TraerProductoMercadoLibre = async (textoBuscar) => {
+    const response = await fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${textoBuscar}`);
     const informacion = await response.json();
     let productosMl = [];
     let xid=0
@@ -237,6 +237,7 @@ function buscarOfertas() {
 function updateValue(e) {
     let letras=e.srcElement.value;
     letras=letras.toUpperCase();
+   
     const resultado = buscarProductos(letras);
     limpiarProductoshtml()
     for (const producto of resultado) {
@@ -305,8 +306,10 @@ function armoElCarrito() {
     }
     const imputId = document.getElementById("fname");
     imputId.addEventListener('input',updateValue);
+
     const todoProd=document.getElementById("todosProductos");
-    imputId.addEventListener('click',updateValue);
+    todoProd.addEventListener('click',updateValue);
+
     const promoProd=document.getElementById("promoProductos");
     promoProd.addEventListener('click',updateOfertas);
     /* Calculo Totales por si recupere el carrito del storage  */
@@ -337,12 +340,31 @@ function armoElCarrito() {
         })
     });
 }
+function updateValueTexto(e) {
+    let letras=e.srcElement.value;
+    letras=letras.toUpperCase();
+    return letras;
+}
+function updateValueMerlib(){
+    const imputId = document.getElementById("fname");
+    const texto = imputId.value;
+    if(texto==""){
+        Swal.fire({
+            title: 'Mercado Libre',
+            icon: 'warning',
+            text: 'Falta texto en buscar!!'
+        })
+    } else {
+        TraerProductoMercadoLibre(texto).then( () => { 
+            armoElCarrito()
+        })
+    }
+}
 /* =========== Fin funciones ========== */
 /* ejecuto la Funcion y cuando tengo la respuesta armo el carrito */
-/* traerProductosEnJson().then( () => { 
-    armoElCarrito()
-}) */
-
-TraerProductoMercadoLibre().then( () => { 
+traerProductosEnJson().then( () => { 
     armoElCarrito()
 })
+
+const buscarMerLib=document.getElementById("mercadoLibre");
+    buscarMerLib.addEventListener('click',updateValueMerlib);
