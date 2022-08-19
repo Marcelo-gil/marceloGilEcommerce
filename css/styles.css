@@ -70,15 +70,22 @@
   box-sizing: border-box;
 }
 
-
 .imagenPequenia {
   object-fit: cover;
   object-position: 50% 50%;
   transition: transform 1s;
-  /* .container {overflow:hidden;} */ }
-  .imagenPequenia:hover {
-    -webkit-transform: scale(1.3);
-    transform: scale(1.3); }
+  /* .container {overflow:hidden;} */ 
+}
+.imagenPequenia:hover {
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3); 
+}
+
+.imagenMercadoLibre {
+  width: 50%;
+  height: 50%;
+  margin-left: 25%;
+}
 
 .contacto {
   background-image: linear-gradient(180deg, #ff7b00, yellow);

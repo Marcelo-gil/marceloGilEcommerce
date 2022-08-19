@@ -5,6 +5,7 @@
         "precio": 170.15,
         "stock": 50,
         "oferta": false,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/alf3Oreo.webp"
     },
     {
@@ -13,6 +14,7 @@
         "precio": 150,
         "stock": 25,
         "oferta": true,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/alf3DLeche.jpg"
     },
     {
@@ -21,6 +23,7 @@
         "precio": 60,
         "stock": 75,
         "oferta": true,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/cerealFortFrutilla.jpg"
     },
     {
@@ -29,6 +32,7 @@
         "precio": 125,
         "stock": 40,
         "oferta": false,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/CoflerExtraMarroc.jpg"
     },
     {
@@ -37,6 +41,7 @@
         "precio": 480,
         "stock": 20,
         "oferta": true,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/bonobon18ud.jpg"
     },
     {
@@ -45,6 +50,7 @@
         "precio": 990,
         "stock": 70,
         "oferta": false,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/butterToffees.webp"
     },
     {
@@ -53,6 +59,7 @@
         "precio": 200,
         "stock": 80,
         "oferta": true,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/BeldemtInfinit.jpg"
     },
     {
@@ -61,6 +68,7 @@
         "precio": 95,
         "stock": 10,
         "oferta": false,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/biznikkeNevado.jpg"
     },
     {
@@ -69,6 +77,7 @@
         "precio": 580,
         "stock": 28,
         "oferta": true,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/alf3guaymallen.jpg"
     },
     {
@@ -77,6 +86,7 @@
         "precio": 506,
         "stock": 14,
         "oferta": true,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/menthoplus.jpg"
     },
     {
@@ -85,6 +95,7 @@
         "precio": 120,
         "stock": 4,
         "oferta": false,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/ticTacMentaFuerte.jpg"
     },
     {
@@ -93,6 +104,7 @@
         "precio": 240,
         "stock": 15,
         "oferta": false,
+        "imagenMeli": false,
         "imagenArt": "./imagenes/huevokinder.jpg"
     }
 ]

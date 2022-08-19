@@ -43,7 +43,8 @@
                         <button class="btn btn-outline-dark" id="btnVaciarCarrito" type="submit">
                             <i class="bi bi-recycle"></i> Vaciar Carrito
                         </button>
-                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal" id="btnCarrito" type="submit">
+                        <!-- <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal" id="btnCarrito" type="submit"></button> -->
+                        <button class="btn btn-outline-dark" id="btnCarrito" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Carrito
                             <span id="idContadorCarrito" class="badge  bg-dark2 text-dark ms-1 rounded-pill">0</span>
@@ -66,17 +67,15 @@
         <!-- Seccion-->
         <div class="container">
             <div class="row">
-                
                 <div class="col-md-8 px-4 px-lg-5 pt-4">
                     <div class="input-group">
                         <input id="fname" name="name" type="text" placeholder="Buscar" class="form-control" >
                         <span class="input-group-append">
-                            <button class="btn btn-outline-secondary border-left-0 border" type="button">
+                            <button id="tablaLocal" class="btn btn-outline-secondary border-left-0 border" type="button">
                                 <i class="bi bi-search"></i>
-                                <button id="mercadoLibre" class="btn btn-outline-secondary border-left-0 border" type="button">
-                                    <img src="./imagenes/MercadoLibre.png" style="width:20px">
-                                </button>
-                          </span>
+                            <button id="mercadoLibre" class="btn btn-outline-secondary border-left-0 border" type="button">
+                                <img src="./imagenes/MercadoLibre.png" style="width:20px">
+                        </span>
                     </div>
                 </div>
             </div>

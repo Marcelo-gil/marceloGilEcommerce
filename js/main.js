@@ -5,7 +5,7 @@ let idArtnew=0
 let productos =[];
 /* Funcion asincrona para traer productos del json */
 const traerProductosEnJson = async () => {
-    const response = await fetch('../json/productos.json');
+    const response = await fetch('./json/productos.json',{mode: 'no-cors'});
     const informacion = await response.json();
     productos = informacion;
 }
@@ -16,9 +16,10 @@ const TraerProductoMercadoLibre = async (textoBuscar) => {
     let productosMl = [];
     let xid=0
     informacion.results.forEach((item) => {
-        productosMl[xid] = { nombre: item.title.toUpperCase() , sku: item.id , precio: item.price, stock: 0, oferta: false, imagenArt: item.thumbnail };
+        productosMl[xid] = { nombre: item.title.toUpperCase() , sku: item.id , precio: item.price , stock: 0 , oferta: false , "imagenMeli": true , imagenArt: item.thumbnail };
         xid += 1
     });
+    productos.splice(0, productos.length);
     productos = productosMl;
 }
 
@@ -38,7 +39,7 @@ function limpiarProductoshtml(){
     nuevos.innerHTML = "";
 }
 
-function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioProducto, oferta: ofertaProducto, imagenArt}){
+function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioProducto, oferta: ofertaProducto, imagenArt, imagenMeli}){
     let nuevos = document.querySelector("#ProductosNuevos");
 
     const fragment = document.createDocumentFragment();
@@ -59,9 +60,11 @@ function agregaProductohtml({sku: idArt,nombre: nombreProducto, precio: precioPr
     divOferta0.appendChild(divOferta1);
     
     const imagenArticulo = document.createElement('img');
-    imagenArticulo.className = "card-img-top imagenPequenia";
-    imagenArticulo.style="width:167px";
-    imagenArticulo.src = imagenArt
+    imagenArticulo.className = "imagenPequenia";
+    if (imagenMeli){
+        imagenArticulo.className +=(imagenMeli) ? " imagenMercadoLibre":"card-img-top";
+    };
+    imagenArticulo.src = imagenArt;
     imagenArticulo.alt = "Imagen de Articulo";
     divOferta0.appendChild(imagenArticulo);
         
@@ -183,8 +186,15 @@ function calculaTotal(){
         if (document.getElementById(idcoprod)!=undefined){
             document.getElementById(idcoprod).innerHTML=carrito[sku].cantidad;
         }
+    };
+    const btnModal=document.getElementById("btnCarrito");
+    if (cantidadTotal !=0){
+        btnModal.setAttribute("data-bs-target","#myModal");
+        btnModal.setAttribute("data-bs-toggle","modal");
+    } else {
+        btnModal.setAttribute("data-bs-toggle","");
+        btnModal.setAttribute("data-bs-target","");
     }
-
     return [total,cantidadTotal]; 
 }
 function actualizarTotalCarritoHtml(totalCarrito,cantidadTotal){ 
@@ -237,9 +247,8 @@ function buscarOfertas() {
 function updateValue(e) {
     let letras=e.srcElement.value;
     letras=letras.toUpperCase();
-   
     const resultado = buscarProductos(letras);
-    limpiarProductoshtml()
+    limpiarProductoshtml();
     for (const producto of resultado) {
         agregaProductohtml(producto);
     }
@@ -249,7 +258,7 @@ function updateValue(e) {
 }
 function updateOfertas() {
     const resultado = buscarOfertas();
-    limpiarProductoshtml()
+    limpiarProductoshtml();
     for (const producto of resultado) {
         agregaProductohtml(producto);
     }
@@ -283,21 +292,30 @@ function toasti(mensaje,color1,color2){
     }).showToast();
 }    
 function displaycarrito() {
-    /* carrito.forEach((carrito) => */
-    document.getElementById("finCarrito").innerHTML = ``
-    for (const sku in carrito) {
-        let tablaImg = `<td><img src="${carrito[sku].imagenArt}" class=".imagenPequenia" style="width:45px"></td>`;
-        let tablaNombre = `<td>${carrito[sku].nombre}</td>`;
-        let tablaCantidad = `<td  class="text-center"> ${carrito[sku].cantidad}</td>`;
-        let tablaPrecio = `<td class="text-end">$ ${carrito[sku].total}</td>`;
+    let [totalCarrito, cantidadTotal] = calculaTotal();
+    if (totalCarrito!=0){
+        /* carrito.forEach((carrito) => */
+        document.getElementById("finCarrito").innerHTML = ``
+        for (const sku in carrito) {
+            let tablaImg = `<td><img src="${carrito[sku].imagenArt}" class=".imagenPequenia" style="width:45px"></td>`;
+            let tablaNombre = `<td>${carrito[sku].nombre}</td>`;
+            let tablaCantidad = `<td  class="text-center"> ${carrito[sku].cantidad}</td>`;
+            let tablaPrecio = `<td class="text-end">$ ${carrito[sku].total}</td>`;
+            document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
+        }
+        let [totalCarrito, cantidadTotal] = calculaTotal()
+        let tablaImg = `<td></td>`;
+        let tablaNombre = `<td></td>`;
+        let tablaCantidad = `<td class="text-center"></td>`;
+        let tablaPrecio = `<td class="text-end"><b>Total $ ${totalCarrito}</b></td>`;
         document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
-    }
-    let [totalCarrito, cantidadTotal] = calculaTotal()
-    let tablaImg = `<td></td>`;
-    let tablaNombre = `<td></td>`;
-    let tablaCantidad = `<td class="text-center"></td>`;
-    let tablaPrecio = `<td class="text-end"><b>Total $ ${totalCarrito}</b></td>`;
-    document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
+    }else{
+        Swal.fire({
+            title: 'Carrito Vacio',
+            icon: 'warning',
+            text: 'Tiene que haber al menos un producto!!'
+        })
+    }        
 }
 function armoElCarrito() {
     /*  Armo el html con los productos */
@@ -320,24 +338,33 @@ function armoElCarrito() {
     const btn1=document.querySelector('#btnVaciarCarrito');
     btn1.addEventListener('click', (e) => {    
         e.preventDefault();
-        Swal.fire({
-            title: 'Estas Seguro de Vaciar el Carrito?',
-            text: "Todavia estas a tiempo!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Borrar!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                vaciarCarrito();
-                Swal.fire({
-                    title: 'Borrado!',
-                    icon: 'success',
-                    text: 'Carrito Borrado!'
-                })
-            }
-        })
+        let [totalCarrito, cantidadTotal] = calculaTotal();
+        if (totalCarrito!=0){
+            Swal.fire({
+                title: 'Estas Seguro de Vaciar el Carrito?',
+                text: "Todavia estas a tiempo!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Borrar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    vaciarCarrito();
+                    Swal.fire({
+                        title: 'Borrado!',
+                        icon: 'success',
+                        text: 'Carrito Borrado!'
+                    })
+                }
+            })
+        } else{
+            Swal.fire({
+                title: 'Carrito Vacio',
+                icon: 'warning',
+                text: 'Tiene que haber al menos un producto!!'
+            })
+        }
     });
 }
 function updateValueTexto(e) {
@@ -355,10 +382,22 @@ function updateValueMerlib(){
             text: 'Falta texto en buscar!!'
         })
     } else {
+        limpiarProductoshtml();
         TraerProductoMercadoLibre(texto).then( () => { 
             armoElCarrito()
         })
     }
+}
+function updateValueTablaLocal(){
+    limpiarProductoshtml();
+    traerProductosEnJson().then( () => { 
+        const imputId = document.getElementById("fname");
+        const texto = imputId.value.toUpperCase();
+        const resultado= (texto != "") ? buscarProductos(texto):[];
+        for (const producto of resultado) {
+            agregaProductohtml(producto);
+        }        
+    })
 }
 /* =========== Fin funciones ========== */
 /* ejecuto la Funcion y cuando tengo la respuesta armo el carrito */
@@ -367,4 +406,7 @@ traerProductosEnJson().then( () => {
 })
 
 const buscarMerLib=document.getElementById("mercadoLibre");
-    buscarMerLib.addEventListener('click',updateValueMerlib);
+buscarMerLib.addEventListener('click',updateValueMerlib);
+
+const buscarTablaLocal=document.getElementById("tablaLocal");
+buscarTablaLocal.addEventListener('click',updateValueTablaLocal);
