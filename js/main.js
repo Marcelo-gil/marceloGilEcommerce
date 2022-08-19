@@ -5,7 +5,7 @@ let idArtnew=0
 let productos =[];
 /* Funcion asincrona para traer productos del json */
 const traerProductosEnJson = async () => {
-    const response = await fetch('./json/productos.json',{mode: 'no-cors'});
+    const response = await fetch('../json/productos.json',{mode: 'no-cors'});
     const informacion = await response.json();
     productos = informacion;
 }
