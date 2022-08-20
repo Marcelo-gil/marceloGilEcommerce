@@ -286,7 +286,7 @@ function toasti(mensaje,color1,color2){
         position: "right", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
-        background: `linear-gradient(to right, ${color1}, ${color2})`,
+        background: `linear-gradient(to left, ${color1}, ${color2})`,
         },
         duration: 3000
     }).showToast();
@@ -317,8 +317,8 @@ function controlTelefonoInput(e) {
     }
 }
 function controlNombre() {
-    const imputId = document.getElementById("lname");
-    const caracteres = imputId.value.length;
+    const inputId = document.getElementById("lname");
+    const caracteres = inputId.value.length;
     if (caracteres<2){
         Swal.fire({
             title: 'Falta el Nombre!!!',
@@ -387,7 +387,7 @@ function displaycarrito() {
         let tablaPrecio = `<td class="text-end"><b>Total $ ${totalCarrito}</b></td>`;
         document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
         const finCompra=document.getElementById("guardarCompra");
-        finCompra.addEventListener('click',limpoFinCompra);
+        finCompra.addEventListener('click',limpoFinCompra(finCompra));
     }else{
         Swal.fire({
             title: 'Carrito Vacio',
@@ -396,18 +396,21 @@ function displaycarrito() {
         })
     }        
 }
-function limpoFinCompra(){
-    //const nombreValido = controlNombre();
-    if (controlNombre() && controlEmail() && controlTelefono()){
-        Swal.fire({
-            title: '!!! Compra Exitosa !!!',
-            icon: 'success',
-            text: 'En breve lo contactaremos para pactar la entrega'
-        })   
-        vaciarCarrito();
-        // $('#myModal').modal().hide();
-        // $("#myModal .close").click()
-    }
+function limpoFinCompra(finCompra){
+    finCompra.addEventListener('click',  function(e) {
+        e.preventDefault();
+        if (controlNombre() && controlEmail() && controlTelefono()){
+            vaciarCarrito();
+            Swal.fire({
+                title: '!!! Compra Exitosa !!!',
+                icon: 'success',
+                text: 'En breve lo contactaremos para pactar la entrega'
+            }).then((result) => {
+                const actualizo=document.getElementById("todosProductos")
+                actualizo.click();
+            })
+        }
+    })
 }
 function armoElCarrito() {
     /*  Armo el html con los productos */
