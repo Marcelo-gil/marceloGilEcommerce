@@ -16,7 +16,7 @@ const TraerProductoMercadoLibre = async (textoBuscar) => {
     let productosMl = [];
     let xid=0
     informacion.results.forEach((item) => {
-        productosMl[xid] = { nombre: item.title.toUpperCase() , sku: item.id , precio: item.price , stock: 0 , oferta: false , "imagenMeli": true , imagenArt: item.thumbnail };
+        productosMl[xid] = { nombre: item.title.toUpperCase() , sku: item.id , precio: item.price , stock: 0 , oferta: false , "imagenMeli": true , "novedad": false, imagenArt: item.thumbnail };
         xid += 1
     });
     productos.splice(0, productos.length);
@@ -244,10 +244,25 @@ function buscarOfertas() {
     const productosBuscados = productos.filter(producto => producto.oferta);
     return productosBuscados;
 }
+function buscarNovedades() { 
+    const productosBuscados = productos.filter(producto => producto.novedad);
+    return productosBuscados;
+}
 function updateValue(e) {
     let letras=e.srcElement.value;
     letras=letras.toUpperCase();
     const resultado = buscarProductos(letras);
+    mostrarResultado(resultado);
+}
+function updateOfertas() {
+    const resultado = buscarOfertas();
+    mostrarResultado(resultado);
+}
+function updateNovedades() {
+    const resultado = buscarNovedades();
+    mostrarResultado(resultado);
+}
+function mostrarResultado(resultado) {
     limpiarProductoshtml();
     for (const producto of resultado) {
         agregaProductohtml(producto);
@@ -256,15 +271,7 @@ function updateValue(e) {
     let [totalCarrito, cantidadTotal] = calculaTotal();
     actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
 }
-function updateOfertas() {
-    const resultado = buscarOfertas();
-    limpiarProductoshtml();
-    for (const producto of resultado) {
-        agregaProductohtml(producto);
-    }
-    let [totalCarrito, cantidadTotal] = calculaTotal();
-    actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
-}
+
 function vaciarCarrito(){
     /* if (confirm("Vacias El Carrito?")){ */
         for (const sku in carrito) {
@@ -425,6 +432,10 @@ function armoElCarrito() {
 
     const promoProd=document.getElementById("promoProductos");
     promoProd.addEventListener('click',updateOfertas);
+
+    const novedadProd=document.getElementById("novedades");
+    novedadProd.addEventListener('click',updateNovedades);
+
     /* Calculo Totales por si recupere el carrito del storage  */
     let [totalCarrito, cantidadTotal] = calculaTotal();
     actualizarTotalCarritoHtml(totalCarrito, cantidadTotal);
