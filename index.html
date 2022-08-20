@@ -69,7 +69,7 @@
             <div class="row">
                 <div class="col-md-8 px-4 px-lg-5 pt-4">
                     <div class="input-group">
-                        <input id="fname" name="name" type="text" placeholder="Buscar" class="form-control" >
+                        <input id="fname" name="tname" type="text" placeholder="Buscar" class="form-control" >
                         <span class="input-group-append">
                             <button id="tablaLocal" class="btn btn-outline-secondary border-left-0 border" type="button">
                                 <i class="bi bi-search"></i>
@@ -116,23 +116,26 @@
                             </table>
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <input id="lname" name="name" type="text" placeholder="Nombre" class="form-control">
+                                    <input id="lname" name="name" type="text" placeholder="Nombre" class="form-control" oninput="controlNombreInput(event)">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <input id="email" name="email" type="text" placeholder="Dirección de Correo" class="form-control">
+                                    <input id="email" name="email" type="text" placeholder="Dirección de Correo" class="form-control" oninput="controlEmailInput(event)">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <input id="phone" name="phone" type="text" placeholder="Telefono" class="form-control">
+                                    <input id="phone" name="phone" type="text" placeholder="Telefono" class="form-control" oninput="controlTelefonoInput(event)">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <img src="./imagenes/Tarjeta.jpg" style="width:45%">
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver al Carrito</button>
-                            <button type="button" class="btn btn-primary">Guardar La Compra</button>
+                            <button id="guardarCompra" type="button" class="btn btn-primary">Guardar La Compra</button>
                         </div>
                 </div>
             </div>

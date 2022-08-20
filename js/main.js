@@ -291,6 +291,83 @@ function toasti(mensaje,color1,color2){
         duration: 3000
     }).showToast();
 }    
+function controlNombreInput(e) {
+    if (e.target.value.length <3){
+        e.target.style.border = '1px solid red';
+    } else{
+        e.target.style.border = '1px solid green';
+    }
+}
+function controlEmailInput(e) {
+    if (e.target.value.length <6){
+        e.target.style.border = '1px solid red';
+    } else{
+        if (e.target.value.includes("@")){
+            e.target.style.border = '1px solid green';
+        } else {
+            e.target.style.border = '1px solid red';
+        }
+    }
+}
+function controlTelefonoInput(e) {
+    if (e.target.value.length <8){
+        e.target.style.border = '1px solid red';
+    } else{
+        e.target.style.border = '1px solid green';
+    }
+}
+function controlNombre() {
+    const imputId = document.getElementById("lname");
+    const caracteres = imputId.value.length;
+    if (caracteres<2){
+        Swal.fire({
+            title: 'Falta el Nombre!!!',
+            icon: 'warning',
+            text: 'Debe ingresar su Nombre, Gracias'
+        })
+        return false
+    } else {
+        return true;
+    }
+}
+
+function controlEmail() {
+    const imputIdEmail = document.getElementById("email");
+    const emailCompra = imputIdEmail.value;
+    if (emailCompra.length<2){
+        Swal.fire({
+            title: 'Falta el Email!!!',
+            icon: 'warning',
+            text: 'Debe ingresar un Email Valido, Gracias'
+        })
+        return false
+    } else {
+        if (emailCompra.includes("@")){
+            return true
+        } else {
+            Swal.fire({
+                title: 'Debe incluir @ en el mail !!!',
+                icon: 'warning',
+                text: 'Debe ingresar un Email Valido, Gracias'
+            })
+            return false
+        }
+    }
+}
+function controlTelefono() {
+    const imputIdTel = document.getElementById("phone");
+    const telCompra = imputIdTel.value;
+    if (telCompra.length<8){
+        Swal.fire({
+            title: 'Telefono incorrecto!!!',
+            icon: 'warning',
+            text: 'Debe ingresar un telefono Valido, Gracias'
+        })
+        return false
+    } else {
+        return true
+    }
+}
 function displaycarrito() {
     let [totalCarrito, cantidadTotal] = calculaTotal();
     if (totalCarrito!=0){
@@ -309,6 +386,8 @@ function displaycarrito() {
         let tablaCantidad = `<td class="text-center"></td>`;
         let tablaPrecio = `<td class="text-end"><b>Total $ ${totalCarrito}</b></td>`;
         document.getElementById("finCarrito").innerHTML += `<tr>${tablaImg + tablaNombre + tablaCantidad + tablaPrecio}</tr}`;
+        const finCompra=document.getElementById("guardarCompra");
+        finCompra.addEventListener('click',limpoFinCompra);
     }else{
         Swal.fire({
             title: 'Carrito Vacio',
@@ -316,6 +395,19 @@ function displaycarrito() {
             text: 'Tiene que haber al menos un producto!!'
         })
     }        
+}
+function limpoFinCompra(){
+    //const nombreValido = controlNombre();
+    if (controlNombre() && controlEmail() && controlTelefono()){
+        Swal.fire({
+            title: '!!! Compra Exitosa !!!',
+            icon: 'success',
+            text: 'En breve lo contactaremos para pactar la entrega'
+        })   
+        vaciarCarrito();
+        // $('#myModal').modal().hide();
+        // $("#myModal .close").click()
+    }
 }
 function armoElCarrito() {
     /*  Armo el html con los productos */

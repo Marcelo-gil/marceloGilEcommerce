@@ -1,110 +1,14 @@
 [
-    {
-        "nombre": "ALF. MILKA TRIPLE OREO",
-        "sku": 1,
-        "precio": 170.15,
-        "stock": 50,
-        "oferta": false,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/alf3Oreo.webp"
-    },
-    {
-        "nombre": "ALF. MILKA TRIPLE DULCE LECHE",
-        "sku": 2,
-        "precio": 150,
-        "stock": 25,
-        "oferta": true,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/alf3DLeche.jpg"
-    },
-    {
-        "nombre": "BARRA CEREAL FORT FRUTILLA",
-        "sku": 3,
-        "precio": 60,
-        "stock": 75,
-        "oferta": true,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/cerealFortFrutilla.jpg"
-    },
-    {
-        "nombre": "BARRA COFLER EXTRA MARROC",
-        "sku": 4,
-        "precio": 125,
-        "stock": 40,
-        "oferta": false,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/CoflerExtraMarroc.jpg"
-    },
-    {
-        "nombre": "BOMBON BON O BON X 18 UNID.",
-        "sku": 5,
-        "precio": 480,
-        "stock": 20,
-        "oferta": true,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/bonobon18ud.jpg"
-    },
-    {
-        "nombre": "CARAM. BUTTER TOFFEE X 825 GRS",
-        "sku": 6,
-        "precio": 990,
-        "stock": 70,
-        "oferta": false,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/butterToffees.webp"
-    },
-    {
-        "nombre": "CHICLE BELDENT INFINIT X UNID.",
-        "sku": 7,
-        "precio": 200,
-        "stock": 80,
-        "oferta": true,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/BeldemtInfinit.jpg"
-    },
-    {
-        "nombre": "CHOC. BIZNIKKE NEVADO X 25 GRS",
-        "sku": 8,
-        "precio": 95,
-        "stock": 10,
-        "oferta": false,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/biznikkeNevado.jpg"
-    },
-    {
-        "nombre": "ALF. GUAYMALLEN TRIPLE X 24 UNID. FRUTA",
-        "sku": 9,
-        "precio": 580,
-        "stock": 28,
-        "oferta": true,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/alf3guaymallen.jpg"
-    },
-    {
-        "nombre": "PAST. MENTHOPLUS S/AZUCAR X 12 DURAZNO",
-        "sku": 10,
-        "precio": 506,
-        "stock": 14,
-        "oferta": true,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/menthoplus.jpg"
-    },
-    {
-        "nombre": "TIC TAC MENTA FUERTE",
-        "sku": 11,
-        "precio": 120,
-        "stock": 4,
-        "oferta": false,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/ticTacMentaFuerte.jpg"
-    },
-    {
-        "nombre": "HUEVO KINDER SORPRESA",
-        "sku": 12,
-        "precio": 240,
-        "stock": 15,
-        "oferta": false,
-        "imagenMeli": false,
-        "imagenArt": "./imagenes/huevokinder.jpg"
-    }
+    {"nombre": "ALF. MILKA TRIPLE OREO", "sku": 1, "precio": 170.15, "stock": 50, "oferta": false, "imagenMeli": false, "imagenArt": "./imagenes/alf3Oreo.webp"},
+    {"nombre": "ALF. MILKA TRIPLE DULCE LECHE", "sku": 2, "precio": 150, "stock": 25, "oferta": true, "imagenMeli": false, "imagenArt": "./imagenes/alf3DLeche.jpg"},
+    {"nombre": "BARRA CEREAL FORT FRUTILLA", "sku": 3,"precio": 60, "stock": 75, "oferta": true, "imagenMeli": false, "imagenArt": "./imagenes/cerealFortFrutilla.jpg"},
+    {"nombre": "BARRA COFLER EXTRA MARROC", "sku": 4, "precio": 125, "stock": 40, "oferta": false, "imagenMeli": false, "imagenArt": "./imagenes/CoflerExtraMarroc.jpg"},
+    {"nombre": "BOMBON BON O BON X 18 UNID.", "sku": 5, "precio": 480, "stock": 20, "oferta": true, "imagenMeli": false, "imagenArt": "./imagenes/bonobon18ud.jpg"},
+    {"nombre": "CARAM. BUTTER TOFFEE X 825 GRS", "sku": 6, "precio": 990, "stock": 70, "oferta": false, "imagenMeli": false, "imagenArt": "./imagenes/butterToffees.webp"},
+    {"nombre": "CHICLE BELDENT INFINIT X UNID.", "sku": 7, "precio": 200, "stock": 80, "oferta": true, "imagenMeli": false, "imagenArt": "./imagenes/BeldemtInfinit.jpg"},
+    {"nombre": "CHOC. BIZNIKKE NEVADO X 25 GRS", "sku": 8, "precio": 95, "stock": 10, "oferta": false, "imagenMeli": false, "imagenArt": "./imagenes/biznikkeNevado.jpg"},
+    {"nombre": "ALF. GUAYMALLEN TRIPLE X 24 UNID. FRUTA", "sku": 9, "precio": 580, "stock": 28, "oferta": true, "imagenMeli": false, "imagenArt": "./imagenes/alf3guaymallen.jpg"},
+    {"nombre": "PAST. MENTHOPLUS S/AZUCAR X 12 DURAZNO", "sku": 10, "precio": 506, "stock": 14, "oferta": true, "imagenMeli": false, "imagenArt": "./imagenes/menthoplus.jpg"},
+    {"nombre": "TIC TAC MENTA FUERTE", "sku": 11, "precio": 120, "stock": 4, "oferta": false, "imagenMeli": false, "imagenArt": "./imagenes/ticTacMentaFuerte.jpg"},
+    {"nombre": "HUEVO KINDER SORPRESA", "sku": 12, "precio": 240, "stock": 15, "oferta": false, "imagenMeli": false, "imagenArt": "./imagenes/huevokinder.jpg"}
 ]
