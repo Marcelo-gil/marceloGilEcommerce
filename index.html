@@ -73,12 +73,28 @@
                         <span class="input-group-append">
                             <button id="tablaLocal" class="btn btn-outline-secondary border-left-0 border" type="button">
                                 <i class="bi bi-search"></i>
+                            </button>
                             <button id="mercadoLibre" class="btn btn-outline-secondary border-left-0 border" type="button">
                                 <img src="./imagenes/MercadoLibre.png" style="width:20px">
+                            </button>
                         </span>
                     </div>
                 </div>
+                <div class="col-md-1 pt-4 ml-3">
+                    <p>Ordenar:</p>
+                </div>
+                <div class="col-md-3 pt-3">
+                    <div class="form-check">
+                        <input class="form-check-input" name="ordenarCheck" type="radio" id="OrdenPrecio">
+                        <label class="form-check-label" for="OrdenPrecio">Menor Precio</label><br>
+                        <input class="form-check-input" name="ordenarCheck" type="radio" id="OrdenNombre" checked>
+                        <label class="form-check-label" for="OrdenNombre">Descripcion</label><br>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div id="spinner">
+            <div class="lds-dual-ring"></div>&nbsp</div>
         </div>
         <section class="py-5">
             <div class="container px-4 px-lg-5">

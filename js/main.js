@@ -3,6 +3,16 @@ let nombreProducto = ""
 let skuProducto = 0
 let idArtnew=0
 let productos =[];
+
+/* oculto spinner */
+document.getElementById("spinner").style.display="none";
+document.getElementById("spinner").style.marginLeft="50%";
+document.getElementById("spinner").style.marginTop="5%";
+
+/* Obtengo carrito del storage o creo uno vacio*/
+const carrito = JSON.parse(localStorage.getItem("carrito")) ?? {};
+const ofertaArray = [];
+
 /* Funcion asincrona para traer productos del json */
 const traerProductosEnJson = async () => {
     const response = await fetch('./json/productos.json');
@@ -13,6 +23,8 @@ const traerProductosEnJson = async () => {
 const TraerProductoMercadoLibre = async (textoBuscar) => {
     const response = await fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${textoBuscar}`);
     const informacion = await response.json();
+    document.getElementById("spinner").style.display="block";
+    await accionAsincrona();
     let productosMl = [];
     let xid=0
     informacion.results.forEach((item) => {
@@ -21,13 +33,16 @@ const TraerProductoMercadoLibre = async (textoBuscar) => {
     });
     productos.splice(0, productos.length);
     productos = productosMl;
+    document.getElementById("spinner").style.display="none";
 }
 
-/* Obtengo carrito del storage o creo uno vacio*/
-
-const carrito = JSON.parse(localStorage.getItem("carrito")) ?? {};
-
-const ofertaArray = [];
+const accionAsincrona = async () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, 250);
+    });   
+}
 
 function buscaOferta(idArt){
     const productosBuscados = productos.find(producto => producto.sku===idArt);
@@ -212,21 +227,15 @@ function EliminaProducto(idProducto) {
     const indexBusqueda = productos.findIndex(producto => producto.sku === idProducto);    
     (indexBusqueda!= -1) && productos.splice(indexBusqueda, 1);
 }
-function stockDisponible() {
-    let totalStock = 0;
-    for (const producto of productos) {
-        totalStock += producto.stock;
-    }
-    return totalStock;
-}
-function OrdenarPrecio() {
-    //const productosOrdenados = productos.map((producto) => producto);
+function ordenarPrecio() {
     const productosOrdenados = [...productos]
-    return productosOrdenados.sort((a,b) => a.precio - b.precio);
+    const resultado=productosOrdenados.sort((a,b) => a.precio - b.precio);
+    mostrarResultado(resultado);
 }
-function PrecioMenor(idmenorPrecio) {
-    const productosMenorPrecio = productos.filter(producto => producto.precio <= idmenorPrecio);
-    return productosMenorPrecio.sort((a,b) => a.precio - b.precio);
+function ordenarNombre() {
+    const productosOrdenados = [...productos]
+    const resultado=productosOrdenados.sort((a,b) => a.nombre.localeCompare(b.nombre));
+    mostrarResultado(resultado);
 }
 function buscarProducto(idnombre) {    
     const productosBuscados = productos.find(producto => producto.nombre.includes(idnombre));
@@ -490,7 +499,8 @@ function updateValueMerlib(){
     } else {
         limpiarProductoshtml();
         TraerProductoMercadoLibre(texto).then( () => { 
-            armoElCarrito()
+            ordenarNombre();
+            armoElCarrito();
         })
     }
 }
@@ -505,10 +515,17 @@ function updateValueTablaLocal(){
         }        
     })
 }
+const ordenPrecio=document.getElementById("OrdenPrecio")
+ordenPrecio.addEventListener('click',ordenarPrecio)
+
+const ordenNombre=document.getElementById("OrdenNombre")
+ordenNombre.addEventListener('click',ordenarNombre)
+
 /* =========== Fin funciones ========== */
 /* ejecuto la Funcion y cuando tengo la respuesta armo el carrito */
 traerProductosEnJson().then( () => { 
-    armoElCarrito()
+    ordenarNombre();
+    armoElCarrito();
 })
 
 const buscarMerLib=document.getElementById("mercadoLibre");
