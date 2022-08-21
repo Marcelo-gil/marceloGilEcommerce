@@ -44,11 +44,6 @@ const accionAsincrona = async () => {
     });   
 }
 
-function buscaOferta(idArt){
-    const productosBuscados = productos.find(producto => producto.sku===idArt);
-    return productosBuscados.oferta;
-}
-
 function limpiarProductoshtml(){
     let nuevos = document.querySelector("#ProductosNuevos");
     nuevos.innerHTML = "";
@@ -223,10 +218,7 @@ function actualizarTotalCarritoHtml(totalCarrito,cantidadTotal){
 function agregaProducto(producto) {
     productos.push(producto);
 }
-function EliminaProducto(idProducto) {
-    const indexBusqueda = productos.findIndex(producto => producto.sku === idProducto);    
-    (indexBusqueda!= -1) && productos.splice(indexBusqueda, 1);
-}
+
 function ordenarPrecio() {
     const productosOrdenados = [...productos]
     const resultado=productosOrdenados.sort((a,b) => a.precio - b.precio);
@@ -430,14 +422,17 @@ function limpoFinCompra(finCompra){
 }
 function armoElCarrito() {
     /*  Armo el html con los productos */
-    for (const producto of productos) {
-        agregaProductohtml(producto);
+    const ordenPrecio=document.getElementById("OrdenPrecio")
+    if (ordenPrecio.checked){
+        ordenarPrecio();
+    } else {
+        ordenarNombre();
     }
     const imputId = document.getElementById("fname");
     imputId.addEventListener('input',updateValue);
 
     const todoProd=document.getElementById("todosProductos");
-    todoProd.addEventListener('click',updateValue);
+    todoProd.addEventListener('click',updateValueTablaLocal);
 
     const promoProd=document.getElementById("promoProductos");
     promoProd.addEventListener('click',updateOfertas);
@@ -482,11 +477,7 @@ function armoElCarrito() {
         }
     });
 }
-function updateValueTexto(e) {
-    let letras=e.srcElement.value;
-    letras=letras.toUpperCase();
-    return letras;
-}
+
 function updateValueMerlib(){
     const imputId = document.getElementById("fname");
     const texto = imputId.value;
@@ -499,7 +490,6 @@ function updateValueMerlib(){
     } else {
         limpiarProductoshtml();
         TraerProductoMercadoLibre(texto).then( () => { 
-            ordenarNombre();
             armoElCarrito();
         })
     }
